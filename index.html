@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+	<title>CSE_GO</title>
+
+	<head>
+	<meta charset="utf-8">
+		<style>
+		#info {
+		  position: absolute;
+		  top: 1vw;
+		  left:47vw;
+		  width: 10vw;
+		  padding: 10px;
+		  text-align: center;
+		  color: yellow;
+		  font-size:4vw;
+		  float:left;
+		  display:none;
+		}
+		#gui {
+		  position: absolute;
+		  top: 0px;
+		  left: 0px;
+		  border: solid 1px green;
+		}
+
+		body {
+		  font-family:微軟正黑體;
+		  overflow: hidden;
+		  background-color:black;
+		  text-align:center;
+		  background-image: url("CSE_GO/background.jpg");
+		}
+		.clock{
+		  height:5vw;
+		  width:5vw;
+		  position: absolute;
+		  top: 2vw;
+		  left: 42vw;
+		  z-index:10;
+		  display:none;
+		}
+		.howToPlayImg{
+		  width:50%;
+		  height:60%;
+		  position: absolute;
+		  left:25%;
+		  top:20%;
+		  display:none;
+		  z-index:10;
+		}
+		.loading{
+		  position:absolute;
+		  width:30%;
+		  height:50%;
+		  left:35%;
+		  top:25%;
+		  display:none;
+		}
+		p{
+		  font-size: 3vw;
+		  width:30vw;
+		  padding:5px;
+		  left:35%;
+		  position: absolute;
+		  color:white;
+		}
+		.option:hover{
+			background:rgba(200,200,200,0.7);
+			border-radius: 100%;
+			box-shadow:0 0 20px 10px rgba(200,200,200,0.7);
+			text-shadow: 0px 0px 10px #fff, 0px 0px 10px #fff;
+			-webkit-transform:scale(1.1);
+			color:black;
+			font-weight:bold;
+		}
+		.creater{
+		  position:absolute;
+		  font-size:20px;
+		  top:90%;
+		  left:80%;
+		}
+		.blackboard{
+		  position:absolute;
+		  width:60%;
+		  top:5%;
+		  left:20%;
+		  display:none;
+		  z-index:20;
+		}
+		.postIt{
+		  margin-left: 5px;
+		  width: 20%;
+		  position:absolute;
+		  top:30%;
+		  left:40%;
+		  display:none;
+		  z-index:21;
+		}
+		.end{
+		  position:absolute;
+		  color:black;
+		  top:35%;
+		  left:42%;
+		  display:none;
+		  z-index:22;
+		}
+		.option{
+			color:rgba(200,200,100,1);
+		}
+		.title{
+		    font-size: 6vw;
+		}
+		.a{
+		  position: absolute;
+		  top:3%;
+		  left:15%;
+		  width:70%;
+		  height:80%;
+		  border:solid 1px;
+		}
+		.button{
+		  display:none;
+		  position: absolute;
+		  left:47%;
+		  top:95%;
+		}
+		hr{
+		  position: absolute;
+		  width:40%;
+		  top:38%;
+		  left:30%;
+		  border: 1px solid #555;
+		}
+		</style>
+		<link href="CSE_GO/icon.ico"rel="SHORTCUT ICON">
+		<script type="text/javascript" src="js/three.min.js" ></script>
+		<script type="text/javascript" src="js/dat.gui.min.js" ></script>
+		<script type="text/javascript" src="js/MTLLoader.js" ></script>
+		<script type="text/javascript" src="js/OBJLoader.js" ></script>
+		<script type="text/javascript" src="js/ColladaLoader.js"></script>
+		<script type="text/javascript" src="js/demo.js" ></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
+	</head>
+	<body>
+		<iframe class="button" src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fzhen-chein.github.io%2FCSE_GO%2Findex.html&layout=button&size=large&mobile_iframe=true&appId=1808210236102777&width=65&height=28" width="65" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+		<img id=clock class=clock src="CSE_GO/clock2.png"></img>
+		<img id=howToPlayImg class=howToPlayImg src="CSE_GO/howToPlay.png"></img>
+		<img id=howToGameImg class=howToPlayImg src="CSE_GO/howToGame.png"></img>
+		<img id=loading class=loading src="CSE_GO/loading.gif"></img>
+		<img id=blackboard class=blackboard src="CSE_GO/blackboard.jpg"></img>
+		<img id=postIt class=postIt src="CSE_GO/postIt.png"></img>
+		<img id=postIt2 class=postIt src="CSE_GO/postIt.png"></img>
+
+		<p class=end id=kill>殺敵數</p>
+		<p class=end id=live>存活時間</p>
+		<p class=end id=notetext1></p>
+		<p class=end id=notetext2></p>
+		<div id="info">Time</div>
+		<p id=start class=option style="top:38%;">開始遊戲</p>
+		<p id=howToPlay class=option style="top:50%;">遊戲說明</p>
+		<p id=exit class=option style="top:62%;">離開遊戲</p>
+		<p id=title class=title style="top:5%;">小明GO</p>
+		<hr>
+
+		<audio id="soundtrack" loop style="display:none">
+		<source src="sounds/Butterfly.mp3" type='audio/mp3'>
+		</audio>
+		<audio id="buttonClick"  style="display:none">
+		<source src="sounds/buttonClick.mp3" type='audio/mp3'>
+		</audio>
+		<audio id="rocket"  style="display:none">
+		<source src="sounds/Rocket.mp3" type='audio/mp3'>
+		</audio>
+		<audio id="uzi"  style="display:none">
+		<source src="sounds/Uzi.mp3" type='audio/mp3'>
+		</audio>
+		<audio id="scream"  style="display:none">
+		<source src="sounds/scream.mp3" type='audio/mp3'>
+		</audio>
+		<a target=_blank href="https://www.facebook.com/profile.php?id=100000265670181"><p class="creater">create by:帥哥</p></a>
+		</body>
+</html>
